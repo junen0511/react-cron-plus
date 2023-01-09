@@ -1,0 +1,28 @@
+.cronContainer {
+  max-width: 600px;
+  .tabContent {
+    width: 500px;
+    :global {
+      .ant-col {
+        line-height: 30px;
+        vertical-align: middle;
+      }
+    }
+    .optionLabel {
+      display: inline-block;
+      margin-right: 0.5em;
+    }
+    div + .optionLabel {
+      margin-left: 0.5em;
+    }
+  }
+  .control {
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    .result {
+      font-size: 18px;
+      vertical-align: middle;
+    }
+  }
+}
