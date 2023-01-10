@@ -3,7 +3,25 @@ interface expsTypes {
   expression: string
 }
 
-interface secondsState {
+interface secondsStateTypes {
+  cronEvery: number
+  incrementStart: number
+  incrementIncrement: number
+  rangeStart: number
+  rangeEnd: number
+  specificSpecific: number[] | number
+}
+
+interface minutesStateTypes {
+  cronEvery: number
+  incrementStart: number
+  incrementIncrement: number
+  rangeStart: number
+  rangeEnd: number
+  specificSpecific: number[] | number
+}
+
+interface hoursStateTypes {
   cronEvery: number
   incrementStart: number
   incrementIncrement: number
@@ -14,7 +32,9 @@ interface secondsState {
 
 interface cronDefaultTypes {
   exps: expsTypes[]
-  second: secondsState
+  second: secondsStateTypes
+  minute: minutesStateTypes
+  hour: hoursStateTypes
 }
 
 const cronDefaultData: cronDefaultTypes = {
@@ -34,23 +54,23 @@ const cronDefaultData: cronDefaultTypes = {
     rangeStart: 1,
     rangeEnd: 0,
     specificSpecific: []
+  },
+  minute: {
+    cronEvery: 1,
+    incrementStart: 3,
+    incrementIncrement: 5,
+    rangeStart: 1,
+    rangeEnd: 0,
+    specificSpecific: []
+  },
+  hour: {
+    cronEvery: 1,
+    incrementStart: 3,
+    incrementIncrement: 5,
+    rangeStart: 0,
+    rangeEnd: 0,
+    specificSpecific: []
   }
-  // minute: {
-  //   cronEvery: 1,
-  //   incrementStart: 3,
-  //   incrementIncrement: 5,
-  //   rangeStart: undefined,
-  //   rangeEnd: undefined,
-  //   specificSpecific: []
-  // },
-  // hour: {
-  //   cronEvery: 1,
-  //   incrementStart: 3,
-  //   incrementIncrement: 5,
-  //   rangeStart: undefined,
-  //   rangeEnd: undefined,
-  //   specificSpecific: []
-  // },
   // day: {
   //   cronEvery: 1,
   //   incrementStart: '1',
