@@ -6,6 +6,8 @@ import styles from './ReactCron.less'
 import Seconds from './Seconds'
 import Minutes from './Minutes'
 import Hours from './Hours'
+import Day from './Day'
+import Week from './Week'
 
 export type ReactCronProps = {
   onChange?: (value?: string) => void
@@ -18,8 +20,8 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
   const [second, setSecond] = useState(defaultData.second)
   const [minute, setMinute] = useState(defaultData.minute)
   const [hour, setHour] = useState(defaultData.hour)
-  //   const [day, setDay] = useState(defaultData.day)
-  //   const [week, setWeek] = useState(defaultData.week)
+  const [day, setDay] = useState(defaultData.day)
+  const [week, setWeek] = useState(defaultData.week)
   //   const [month, setMonth] = useState(defaultData.month)
   //   const [year, setYear] = useState(defaultData.year)
   //   const [output, setOutput] = useState(defaultData.output)
@@ -105,9 +107,85 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
     return hours
   }, [hour])
 
+  // day/天
+  const onChangeDay = (value: number[] | number, filedKey: string) => {
+    setDay({ ...day, [filedKey]: value })
+  }
+
+  const daysText = useMemo(() => {
+    let days = ''
+    let cronEvery = day.cronEvery
+    switch (cronEvery) {
+      case 1:
+        days = '*'
+        break
+      case 2:
+        days = day.incrementStart + '/' + day.incrementIncrement
+        break
+      case 3:
+        if (Array.isArray(day.specificSpecific)) {
+          days = day.specificSpecific.join(',')
+        }
+        break
+      case 4:
+        days = 'L'
+        break
+      case 5:
+        days = 'LW'
+        break
+      case 6:
+        days = 'L-' + day.cronDaysBeforeEomMinus
+        break
+      case 7:
+        days = day.cronDaysNearestWeekday + 'W'
+        break
+      case 8:
+        days = day.cronLastSpecificDomDay + 'L'
+        break
+      default:
+        days = '?'
+        break
+    }
+    return days
+  }, [day])
+
+  // week/周
+  const onChangeWeek = (value: number[] | number, filedKey: string) => {
+    setWeek({ ...week, [filedKey]: value })
+  }
+
+  const onSelectWeek = (value: string[] | string) => {
+    setWeek({ ...week, specificSpecific: value })
+  }
+
+  const weeksText = useMemo(() => {
+    let weeks = ''
+    let cronEvery = day.cronEvery
+    switch (cronEvery) {
+      case 9:
+        weeks = week.incrementStart + '/' + week.incrementIncrement
+        break
+      case 10:
+        if (Array.isArray(week.specificSpecific)) {
+          weeks = week.specificSpecific.join(',')
+        }
+        break
+      case 11:
+        weeks = week.cronNthDayDay + '#' + week.cronNthDayNth
+        break
+      default:
+        weeks = '?'
+        break
+    }
+    return weeks
+  }, [week, day.cronEvery])
+
   const cron = useMemo(
-    () => `${secondsText || '*'} ${minutesText || '*'} ${hoursText || '*'}`,
-    [secondsText, minutesText, hoursText]
+    () =>
+      `${secondsText || '*'} ${minutesText || '*'} ${hoursText || '*'} ${
+        daysText || '*'
+      } ${weeksText || '?'}`,
+    [secondsText, minutesText, hoursText, daysText, weeksText]
   )
 
   const tabItems = [
@@ -125,6 +203,15 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
       label: text.Hours.name,
       key: '3',
       children: <Hours value={hour} onChange={onChangeHour} />
+    },
+    {
+      label: text.Day.name,
+      key: '4',
+      children: (
+        <Day value={day} onChange={onChangeDay}>
+          <Week value={week} onChange={onChangeWeek} onSelect={onSelectWeek} />
+        </Day>
+      )
     }
   ]
 

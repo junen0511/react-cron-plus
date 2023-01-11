@@ -30,11 +30,31 @@ interface hoursStateTypes {
   specificSpecific: number[] | number
 }
 
+interface dayStateTypes {
+  cronEvery: number
+  incrementStart: number
+  incrementIncrement: number
+  specificSpecific: number[] | number
+  cronDaysBeforeEomMinus: number
+  cronDaysNearestWeekday: number
+  cronLastSpecificDomDay: number
+}
+
+interface weekStateTypes {
+  incrementStart: number
+  incrementIncrement: number
+  specificSpecific: string[] | string
+  cronNthDayDay: number
+  cronNthDayNth: number
+}
+
 interface cronDefaultTypes {
   exps: expsTypes[]
   second: secondsStateTypes
   minute: minutesStateTypes
   hour: hoursStateTypes
+  day: dayStateTypes
+  week: weekStateTypes
 }
 
 const cronDefaultData: cronDefaultTypes = {
@@ -67,29 +87,26 @@ const cronDefaultData: cronDefaultTypes = {
     cronEvery: 1,
     incrementStart: 3,
     incrementIncrement: 5,
-    rangeStart: 0,
+    rangeStart: 1,
     rangeEnd: 0,
     specificSpecific: []
+  },
+  day: {
+    cronEvery: 1,
+    incrementStart: 1,
+    incrementIncrement: 1,
+    specificSpecific: [],
+    cronDaysBeforeEomMinus: 1,
+    cronDaysNearestWeekday: 1,
+    cronLastSpecificDomDay: 1
+  },
+  week: {
+    incrementStart: 1,
+    incrementIncrement: 1,
+    specificSpecific: [],
+    cronNthDayDay: 1,
+    cronNthDayNth: 1
   }
-  // day: {
-  //   cronEvery: 1,
-  //   incrementStart: '1',
-  //   incrementIncrement: '1',
-  //   rangeStart: undefined,
-  //   rangeEnd: undefined,
-  //   specificSpecific: [],
-  //   cronLastSpecificDomDay: 1,
-  //   cronDaysBeforeEomMinus: '',
-  //   cronDaysNearestWeekday: ''
-  // },
-  // week: {
-  //   cronEvery: 1,
-  //   incrementStart: '1',
-  //   incrementIncrement: '1',
-  //   specificSpecific: [],
-  //   cronNthDayDay: 1,
-  //   cronNthDayNth: '1'
-  // },
   // month: {
   //   cronEvery: 1,
   //   incrementStart: '3',
