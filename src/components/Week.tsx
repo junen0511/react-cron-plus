@@ -16,8 +16,7 @@ export const weekOptions = new Array(7).fill(0).map((value, index) => ({
 }))
 
 export const nthOptions = new Array(5).fill(0).map((value, index) => ({
-  value: index + 1,
-  label: index + 1
+  value: index + 1
 }))
 
 const Week: React.FC<WeekProps> = (props) => {
@@ -41,7 +40,7 @@ const Week: React.FC<WeekProps> = (props) => {
   }
 
   return (
-    <Space direction="vertical" align="baseline" style={{ marginTop: 15 }}>
+    <Space direction="vertical"  style={{ marginTop: 15 }}>
       <Row align="middle">
         <Col>
           <Radio value={9}></Radio>

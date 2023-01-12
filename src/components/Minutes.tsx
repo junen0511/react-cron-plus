@@ -12,8 +12,7 @@ export type MinutesProps = {
 
 const Minutes: React.FC<MinutesProps> = (props) => {
   const MinutesOptions = new Array(60).fill(0).map((value, index) => ({
-    value: index,
-    label: index
+    value: index
   }))
 
   const onChangeType = (e: RadioChangeEvent) => {
@@ -37,7 +36,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
   return (
     <div className={styles.tabContent}>
       <Radio.Group onChange={onChangeType} value={props.value.cronEvery}>
-        <Space direction="vertical" align="baseline">
+        <Space direction="vertical">
           <Radio value={1}>{text.Minutes.every}</Radio>
           <Row align="middle">
             <Col>

@@ -8,6 +8,8 @@ import Minutes from './Minutes'
 import Hours from './Hours'
 import Day from './Day'
 import Week from './Week'
+import Month from './Month'
+import Year from './Year'
 
 export type ReactCronProps = {
   onChange?: (value?: string) => void
@@ -22,8 +24,8 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
   const [hour, setHour] = useState(defaultData.hour)
   const [day, setDay] = useState(defaultData.day)
   const [week, setWeek] = useState(defaultData.week)
-  //   const [month, setMonth] = useState(defaultData.month)
-  //   const [year, setYear] = useState(defaultData.year)
+  const [month, setMonth] = useState(defaultData.month)
+  const [year, setYear] = useState(defaultData.year)
   //   const [output, setOutput] = useState(defaultData.output)
 
   // second/秒
@@ -180,12 +182,74 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
     return weeks
   }, [week, day.cronEvery])
 
+  // month/月
+  const onChangeMonth = (value: number[] | number, filedKey: string) => {
+    setMonth({ ...month, [filedKey]: value })
+  }
+
+  const monthsText = useMemo(() => {
+    let months = ''
+    let cronEvery = month.cronEvery
+    switch (cronEvery) {
+      case 1:
+        months = '*'
+        break
+      case 2:
+        months = month.incrementStart + '/' + month.incrementIncrement
+        break
+      case 3:
+        if (Array.isArray(month.specificSpecific)) {
+          months = month.specificSpecific.join(',')
+        }
+        break
+      case 4:
+        months = month.rangeStart + '-' + month.rangeEnd
+        break
+    }
+    return months
+  }, [month])
+
+  // year/月
+  const onChangeYear = (value: number[] | number, filedKey: string) => {
+    setYear({ ...year, [filedKey]: value })
+  }
+
+  const yearsText = useMemo(() => {
+    let years = ''
+    let cronEvery = year.cronEvery
+    switch (cronEvery) {
+      case 1:
+        years = '*'
+        break
+      case 2:
+        years = year.incrementStart + '/' + year.incrementIncrement
+        break
+      case 3:
+        if (Array.isArray(year.specificSpecific)) {
+          years = year.specificSpecific.join(',')
+        }
+        break
+      case 4:
+        years = year.rangeStart + '-' + year.rangeEnd
+        break
+    }
+    return years
+  }, [year])
+
   const cron = useMemo(
     () =>
       `${secondsText || '*'} ${minutesText || '*'} ${hoursText || '*'} ${
         daysText || '*'
-      } ${weeksText || '?'}`,
-    [secondsText, minutesText, hoursText, daysText, weeksText]
+      } ${monthsText || '*'} ${weeksText || '?'} ${yearsText || '*'}`,
+    [
+      secondsText,
+      minutesText,
+      hoursText,
+      daysText,
+      monthsText,
+      weeksText,
+      yearsText
+    ]
   )
 
   const tabItems = [
@@ -212,6 +276,16 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
           <Week value={week} onChange={onChangeWeek} onSelect={onSelectWeek} />
         </Day>
       )
+    },
+    {
+      label: text.Month.name,
+      key: '5',
+      children: <Month value={month} onChange={onChangeMonth} />
+    },
+    {
+      label: text.Year.name,
+      key: '6',
+      children: <Year value={year} onChange={onChangeYear} />
     }
   ]
 

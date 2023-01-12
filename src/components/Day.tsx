@@ -15,8 +15,7 @@ export type DayProps = {
 
 const Day: React.FC<DayProps> = (props) => {
   const dayOptions = new Array(31).fill(0).map((value, index) => ({
-    value: index + 1,
-    label: index + 1
+    value: index + 1
   }))
 
   const onChangeType = (e: RadioChangeEvent) => {
@@ -40,7 +39,7 @@ const Day: React.FC<DayProps> = (props) => {
   return (
     <div className={styles.tabContent}>
       <Radio.Group onChange={onChangeType} value={props.value.cronEvery}>
-        <Space direction="vertical" align="baseline">
+        <Space direction="vertical">
           <Radio value={1}>{text.Day.every}</Radio>
           <Row align="middle">
             <Col>

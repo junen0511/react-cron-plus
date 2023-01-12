@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 interface expsTypes {
   type: string
   expression: string
@@ -48,6 +50,24 @@ interface weekStateTypes {
   cronNthDayNth: number
 }
 
+interface monthStateTypes {
+  cronEvery: number
+  incrementStart: number
+  incrementIncrement: number
+  rangeStart: number
+  rangeEnd: number
+  specificSpecific: number[] | number
+}
+
+interface yearStateTypes {
+  cronEvery: number
+  incrementStart: number
+  incrementIncrement: number
+  rangeStart: number
+  rangeEnd: number
+  specificSpecific: number[] | number
+}
+
 interface cronDefaultTypes {
   exps: expsTypes[]
   second: secondsStateTypes
@@ -55,6 +75,8 @@ interface cronDefaultTypes {
   hour: hoursStateTypes
   day: dayStateTypes
   week: weekStateTypes
+  month: monthStateTypes
+  year: yearStateTypes
 }
 
 const cronDefaultData: cronDefaultTypes = {
@@ -87,7 +109,7 @@ const cronDefaultData: cronDefaultTypes = {
     cronEvery: 1,
     incrementStart: 3,
     incrementIncrement: 5,
-    rangeStart: 1,
+    rangeStart: 0,
     rangeEnd: 0,
     specificSpecific: []
   },
@@ -106,23 +128,23 @@ const cronDefaultData: cronDefaultTypes = {
     specificSpecific: [],
     cronNthDayDay: 1,
     cronNthDayNth: 1
+  },
+  month: {
+    cronEvery: 1,
+    incrementStart: 3,
+    incrementIncrement: 5,
+    rangeStart: 1,
+    rangeEnd: 1,
+    specificSpecific: []
+  },
+  year: {
+    cronEvery: 1,
+    incrementStart: moment().year(),
+    incrementIncrement: 1,
+    rangeStart: moment().year(),
+    rangeEnd: moment().add(3, 'year').year(),
+    specificSpecific: []
   }
-  // month: {
-  //   cronEvery: 1,
-  //   incrementStart: '3',
-  //   incrementIncrement: '5',
-  //   rangeStart: undefined,
-  //   rangeEnd: undefined,
-  //   specificSpecific: []
-  // },
-  // year: {
-  //   cronEvery: 1,
-  //   incrementStart: '2017',
-  //   incrementIncrement: '1',
-  //   rangeStart: undefined,
-  //   rangeEnd: undefined,
-  //   specificSpecific: []
-  // },
   // output: {
   //   second: '',
   //   minute: '',
