@@ -148,8 +148,8 @@ const Day: React.FC<DayProps> = (props) => {
               <span className={styles.optionLabel}>{text.Day.lastWeek[1]}</span>
             </Col>
           </Row>
-          {props.children}
         </Space>
+        {props.children}
       </Radio.Group>
     </div>
   )

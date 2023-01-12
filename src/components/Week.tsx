@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Radio, Select, InputNumber, Row, Col } from 'antd'
+import React from 'react'
+import { Radio, Select, InputNumber, Row, Col, Space } from 'antd'
 import Language from '../language'
 import styles from './ReactCron.less'
 const text = Language.cn
@@ -13,6 +13,11 @@ export type WeekProps = {
 export const weekOptions = new Array(7).fill(0).map((value, index) => ({
   value: index,
   label: text.Week[index]
+}))
+
+export const nthOptions = new Array(5).fill(0).map((value, index) => ({
+  value: index + 1,
+  label: index + 1
 }))
 
 const Week: React.FC<WeekProps> = (props) => {
@@ -36,7 +41,7 @@ const Week: React.FC<WeekProps> = (props) => {
   }
 
   return (
-    <Fragment>
+    <Space direction="vertical" align="baseline" style={{ marginTop: 15 }}>
       <Row align="middle">
         <Col>
           <Radio value={9}></Radio>
@@ -86,12 +91,14 @@ const Week: React.FC<WeekProps> = (props) => {
         </Col>
         <Col>
           <span className={styles.optionLabel}>{text.Day.someWeekday[0]}</span>
-          <InputNumber
+          <Select
+            allowClear
+            style={{ width: 90, marginRight: 10 }}
             value={props.value.cronNthDayNth}
-            min={1}
-            max={5}
+            options={nthOptions}
             onChange={(value) => onChangeInput(value, 'cronNthDayNth')}
           />
+
           <Select
             allowClear
             style={{ width: 280 }}
@@ -102,7 +109,7 @@ const Week: React.FC<WeekProps> = (props) => {
           <span className={styles.optionLabel}>{text.Day.someWeekday[1]}</span>
         </Col>
       </Row>
-    </Fragment>
+    </Space>
   )
 }
 
