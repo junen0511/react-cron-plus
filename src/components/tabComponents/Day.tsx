@@ -1,10 +1,9 @@
-import type { WeekProps } from './Week'
 import React from 'react'
 import { Radio, Space, Select, InputNumber, Row, Col } from 'antd'
 import type { RadioChangeEvent } from 'antd'
-import { weekOptions } from './Week'
-import Language from '../language'
-import styles from './ReactCron.less'
+import { WeekProps, weekOptions } from './Week'
+import Language from '../../language'
+import styles from '../ReactCron.less'
 const text = Language.cn
 
 export type DayProps = {

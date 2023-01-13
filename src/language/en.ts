@@ -61,5 +61,5 @@ export default {
     cycle: ['Every year between', 'and']
   },
   Save: 'Save',
-  Close: 'Close'
+  Cancel: 'Cancel'
 }

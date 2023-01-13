@@ -50,5 +50,5 @@ export default {
     cycle: ['从', '到', '年之间的每一年']
   },
   Save: '保存',
-  Close: '关闭'
+  Cancel: '取消'
 }

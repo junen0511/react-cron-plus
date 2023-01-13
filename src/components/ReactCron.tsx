@@ -1,24 +1,26 @@
-import React, { useState, useMemo } from 'react'
-import { Button, Tabs, Space, Card } from 'antd'
+import React, { useState, useEffect, useMemo } from 'react'
+import { Button, Tabs, Space, Card, message } from 'antd'
 import Language from '../language'
 import defaultData from './defaultData'
 import styles from './ReactCron.less'
-import Seconds from './Seconds'
-import Minutes from './Minutes'
-import Hours from './Hours'
-import Day from './Day'
-import Week from './Week'
-import Month from './Month'
-import Year from './Year'
+import Seconds from './tabComponents/Seconds'
+import Minutes from './tabComponents/Minutes'
+import Hours from './tabComponents/Hours'
+import Day from './tabComponents/Day'
+import Week from './tabComponents/Week'
+import Month from './tabComponents/Month'
+import Year from './tabComponents/Year'
+import { cronExpressionParser, dayExpressionParser } from './__utils'
 
 export type ReactCronProps = {
-  onChange?: (value?: string) => void
-  onClose?: () => void
+  value?: string
+  onOka?: (value?: string) => void
+  onCancel?: () => void
 }
 
 const ReactCron: React.FC<ReactCronProps> = (props) => {
+  const [messageApi, contextHolder] = message.useMessage()
   const text = Language.cn
-  const [exps, setExps] = useState(defaultData.exps)
   const [second, setSecond] = useState(defaultData.second)
   const [minute, setMinute] = useState(defaultData.minute)
   const [hour, setHour] = useState(defaultData.hour)
@@ -27,6 +29,65 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
   const [month, setMonth] = useState(defaultData.month)
   const [year, setYear] = useState(defaultData.year)
   //   const [output, setOutput] = useState(defaultData.output)
+
+  useEffect(() => {
+    initialExpressionParser()
+  }, [props.value])
+
+  // Week parser
+  const weekExpressionParser = (expressionValue: any, expression: string) => {
+    if (expression.indexOf('/') >= 0) {
+      setDay({ ...day, cronEvery: 9 })
+    } else if (expression.indexOf('-') >= 0) {
+      setDay({ ...day, cronEvery: 10 })
+    } else if (expression.indexOf('#') >= 0) {
+      setDay({ ...day, cronEvery: 11 })
+    }
+    setWeek(cronExpressionParser(expressionValue, expression))
+  }
+
+  const initialExpressionParser = () => {
+    const expressionList = props.value?.split(' ')
+    if (expressionList?.length !== 7) {
+      messageApi.open({
+        type: 'error',
+        content: 'Cron 表达式格式错误!'
+      })
+      return false
+    }
+
+    if (expressionList && expressionList?.length > 0) {
+      expressionList.forEach((expression: string, index: number) => {
+        switch (index) {
+          case 0:
+            setSecond(cronExpressionParser(second, expression))
+            break
+          case 1:
+            setMinute(cronExpressionParser(minute, expression))
+            break
+          case 2:
+            setHour(cronExpressionParser(hour, expression))
+            break
+          case 3:
+            if (expression !== '?') {
+              setDay(dayExpressionParser(day, expression))
+            }
+            break
+          case 4:
+            setMonth(cronExpressionParser(month, expression))
+            break
+          case 5:
+            if (expression !== '?') {
+              weekExpressionParser(week, expression)
+            }
+            break
+          case 6:
+            setYear(cronExpressionParser(year, expression))
+            break
+        }
+      })
+    }
+  }
 
   // second/秒
   const onChangeSecond = (value: number[] | number, filedKey: string) => {
@@ -291,24 +352,25 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
 
   return (
     <div className={styles.cronContainer}>
+      {contextHolder}
+      <p className={styles.result}>{cron}</p>
       <Card size="small">
         <Tabs defaultActiveKey="1" items={tabItems} />
       </Card>
       <div className={styles.control}>
         <Space align="center">
-          <span className={styles.result}>{cron}</span>
           <Button
             type="primary"
             onClick={() => {
-              if (props.onChange) {
-                props.onChange(cron)
+              if (props.onOka) {
+                props.onOka(cron)
               }
             }}
           >
             {text.Save}
           </Button>
-          <Button type="primary" onClick={props.onClose}>
-            {text.Close}
+          <Button type="primary" onClick={props.onCancel}>
+            {text.Cancel}
           </Button>
         </Space>
       </div>

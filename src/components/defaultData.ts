@@ -1,10 +1,5 @@
 import moment from 'moment'
 
-interface expsTypes {
-  type: string
-  expression: string
-}
-
 interface secondsStateTypes {
   cronEvery: number
   incrementStart: number
@@ -69,7 +64,6 @@ interface yearStateTypes {
 }
 
 interface cronDefaultTypes {
-  exps: expsTypes[]
   second: secondsStateTypes
   minute: minutesStateTypes
   hour: hoursStateTypes
@@ -80,15 +74,6 @@ interface cronDefaultTypes {
 }
 
 const cronDefaultData: cronDefaultTypes = {
-  exps: [
-    { type: 'second', expression: '' },
-    { type: 'minute', expression: '' },
-    { type: 'hour', expression: '' },
-    { type: 'day', expression: '' },
-    { type: 'month', expression: '' },
-    { type: 'Week', expression: '' },
-    { type: 'year', expression: '' }
-  ],
   second: {
     cronEvery: 1,
     incrementStart: 3,

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Radio, Select, InputNumber, Row, Col, Space } from 'antd'
-import Language from '../language'
-import styles from './ReactCron.less'
+import Language from '../../language'
+import styles from '../ReactCron.less'
 const text = Language.cn
 
 export type WeekProps = {
@@ -40,7 +40,7 @@ const Week: React.FC<WeekProps> = (props) => {
   }
 
   return (
-    <Space direction="vertical"  style={{ marginTop: 15 }}>
+    <Space direction="vertical" style={{ marginTop: 15 }}>
       <Row align="middle">
         <Col>
           <Radio value={9}></Radio>
