@@ -27,7 +27,12 @@ const resolveComma = (
   const specificSpecificStrs = expression.split(',')
   return {
     ...expressionValue,
-    specificSpecific: specificSpecificStrs.map((item) => Number(item)),
+    specificSpecific: specificSpecificStrs.map((item: string) => {
+      if (Number.isNaN(Number(item))) {
+        return item
+      }
+      return Number(item)
+    }),
     cronEvery
   }
 }

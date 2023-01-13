@@ -5,7 +5,7 @@ import './App.css'
 
 function App() {
   const [open, setOpen] = useState(false)
-  const [cron, setCron] = useState('* * * * * ? *')
+  const [cron, setCron] = useState('')
 
   const onOkaCron = (value: any) => {
     setCron(value)
@@ -17,9 +17,8 @@ function App() {
   }
 
   return (
-    <Space style={{ margin: '50px 0 0 50px' }} align="center">
+    <div className="app-container">
       <Popover
-        placement="topLeft"
         trigger="click"
         open={open}
         content={
@@ -37,7 +36,7 @@ function App() {
           placeholder="* * * * * ? *"
         />
       </Popover>
-    </Space>
+    </div>
   )
 }
 

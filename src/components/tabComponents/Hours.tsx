@@ -1,9 +1,8 @@
 import React from 'react'
 import { Radio, Space, Select, InputNumber, Row, Col } from 'antd'
 import type { RadioChangeEvent } from 'antd'
-import Language from '../../language'
 import styles from '../ReactCron.less'
-const text = Language.cn
+import { useTranslation } from 'react-i18next'
 
 export type HoursProps = {
   value: any
@@ -11,6 +10,7 @@ export type HoursProps = {
 }
 
 const Hours: React.FC<HoursProps> = (props) => {
+  const { t } = useTranslation()
   const HoursOptions = new Array(24).fill(0).map((value, index) => ({
     value: index
   }))
@@ -37,14 +37,14 @@ const Hours: React.FC<HoursProps> = (props) => {
     <div className={styles.tabContent}>
       <Radio.Group onChange={onChangeType} value={props.value.cronEvery}>
         <Space direction="vertical">
-          <Radio value={1}>{text.Hours.every}</Radio>
+          <Radio value={1}>{t('Hours.every')}</Radio>
           <Row align="middle">
             <Col>
               <Radio value={2}></Radio>
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Hours.interval[0]}
+                {t('Hours.interval.0')}
               </span>
               <InputNumber
                 value={props.value.incrementIncrement}
@@ -53,7 +53,7 @@ const Hours: React.FC<HoursProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementIncrement')}
               />
               <span className={styles.optionLabel}>
-                {text.Hours.interval[1] || ''}
+                {t('Hours.interval.1')}
               </span>
               <InputNumber
                 value={props.value.incrementStart}
@@ -62,7 +62,7 @@ const Hours: React.FC<HoursProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementStart')}
               />
               <span className={styles.optionLabel}>
-                {text.Hours.interval[2] || ''}
+                {t('Hours.interval.2')}
               </span>
             </Col>
           </Row>
@@ -71,7 +71,7 @@ const Hours: React.FC<HoursProps> = (props) => {
               <Radio value={3}></Radio>
             </Col>
             <Col>
-              <span className={styles.optionLabel}>{text.Hours.specific}</span>
+              <span className={styles.optionLabel}>{t('Hours.specific')}</span>
               <Select
                 mode="multiple"
                 allowClear
@@ -87,25 +87,21 @@ const Hours: React.FC<HoursProps> = (props) => {
               <Radio value={4}></Radio>
             </Col>
             <Col>
-              <span className={styles.optionLabel}>{text.Hours.cycle[0]}</span>
+              <span className={styles.optionLabel}>{t('Hours.cycle.0')}</span>
               <InputNumber
                 value={props.value.rangeStart}
                 min={1}
                 max={60}
                 onChange={(value) => onChangeInput(value, 'rangeStart')}
               />
-              <span className={styles.optionLabel}>
-                {text.Hours.cycle[1] || ''}
-              </span>
+              <span className={styles.optionLabel}>{t('Hours.cycle.1')}</span>
               <InputNumber
                 value={props.value.rangeEnd}
                 min={0}
                 max={59}
                 onChange={(value) => onChangeInput(value, 'rangeEnd')}
               />
-              <span className={styles.optionLabel}>
-                {text.Hours.cycle[2] || ''}
-              </span>
+              <span className={styles.optionLabel}>{t('Hours.cycle.2')}</span>
             </Col>
           </Row>
         </Space>

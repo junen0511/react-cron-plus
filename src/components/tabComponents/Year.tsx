@@ -2,9 +2,8 @@ import React from 'react'
 import moment from 'moment'
 import { Radio, Space, Select, InputNumber, Row, Col } from 'antd'
 import type { RadioChangeEvent } from 'antd'
-import Language from '../../language'
 import styles from '../ReactCron.less'
-const text = Language.cn
+import { useTranslation } from 'react-i18next'
 
 const maxRange = 20
 const currentYear = moment().year()
@@ -16,6 +15,7 @@ export type YearProps = {
 }
 
 const Year: React.FC<YearProps> = (props) => {
+  const { t } = useTranslation()
   const yearOptions = new Array(maxRange).fill(0).map((value, index) => ({
     value: moment().add(index, 'year').year()
   }))
@@ -42,14 +42,14 @@ const Year: React.FC<YearProps> = (props) => {
     <div className={styles.tabContent}>
       <Radio.Group onChange={onChangeType} value={props.value.cronEvery}>
         <Space direction="vertical">
-          <Radio value={1}>{text.Year.every}</Radio>
+          <Radio value={1}>{t('Year.every')}</Radio>
           <Row align="middle">
             <Col>
               <Radio value={2}></Radio>
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Year.interval[0]}
+                {t('Year.interval.0')}
               </span>
               <InputNumber
                 value={props.value.incrementIncrement}
@@ -58,7 +58,7 @@ const Year: React.FC<YearProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementIncrement')}
               />
               <span className={styles.optionLabel}>
-                {text.Year.interval[1] || ''}
+                {t('Year.interval.1')}
               </span>
               <InputNumber
                 value={props.value.incrementStart}
@@ -67,7 +67,7 @@ const Year: React.FC<YearProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementStart')}
               />
               <span className={styles.optionLabel}>
-                {text.Year.interval[2] || ''}
+                {t('Year.interval.2')}
               </span>
             </Col>
           </Row>
@@ -76,7 +76,7 @@ const Year: React.FC<YearProps> = (props) => {
               <Radio value={3}></Radio>
             </Col>
             <Col>
-              <span className={styles.optionLabel}>{text.Year.specific}</span>
+              <span className={styles.optionLabel}>{t('Year.specific')}</span>
               <Select
                 mode="multiple"
                 allowClear
@@ -92,25 +92,21 @@ const Year: React.FC<YearProps> = (props) => {
               <Radio value={4}></Radio>
             </Col>
             <Col>
-              <span className={styles.optionLabel}>{text.Year.cycle[0]}</span>
+              <span className={styles.optionLabel}>{t('Year.cycle.0')}</span>
               <InputNumber
                 value={props.value.rangeStart}
                 min={currentYear}
                 max={maxRangeYear}
                 onChange={(value) => onChangeInput(value, 'rangeStart')}
               />
-              <span className={styles.optionLabel}>
-                {text.Year.cycle[1] || ''}
-              </span>
+              <span className={styles.optionLabel}>{t('Year.cycle.1')}</span>
               <InputNumber
                 value={props.value.rangeEnd}
                 min={currentYear}
                 max={maxRangeYear}
                 onChange={(value) => onChangeInput(value, 'rangeEnd')}
               />
-              <span className={styles.optionLabel}>
-                {text.Year.cycle[2] || ''}
-              </span>
+              <span className={styles.optionLabel}>{t('Year.cycle.2')}</span>
             </Col>
           </Row>
         </Space>

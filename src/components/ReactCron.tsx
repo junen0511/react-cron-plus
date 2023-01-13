@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Button, Tabs, Space, Card, message } from 'antd'
-import Language from '../language'
 import defaultData from './defaultData'
 import styles from './ReactCron.less'
 import Seconds from './tabComponents/Seconds'
@@ -11,6 +10,8 @@ import Week from './tabComponents/Week'
 import Month from './tabComponents/Month'
 import Year from './tabComponents/Year'
 import { cronExpressionParser, dayExpressionParser } from './__utils'
+import './language/i18n'
+import { useTranslation } from 'react-i18next'
 
 export type ReactCronProps = {
   value?: string
@@ -19,8 +20,8 @@ export type ReactCronProps = {
 }
 
 const ReactCron: React.FC<ReactCronProps> = (props) => {
+  const { t, i18n } = useTranslation()
   const [messageApi, contextHolder] = message.useMessage()
-  const text = Language.cn
   const [second, setSecond] = useState(defaultData.second)
   const [minute, setMinute] = useState(defaultData.minute)
   const [hour, setHour] = useState(defaultData.hour)
@@ -38,7 +39,7 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
   const weekExpressionParser = (expressionValue: any, expression: string) => {
     if (expression.indexOf('/') >= 0) {
       setDay({ ...day, cronEvery: 9 })
-    } else if (expression.indexOf('-') >= 0) {
+    } else if (expression.indexOf(',') >= 0) {
       setDay({ ...day, cronEvery: 10 })
     } else if (expression.indexOf('#') >= 0) {
       setDay({ ...day, cronEvery: 11 })
@@ -47,6 +48,10 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
   }
 
   const initialExpressionParser = () => {
+    if (!props.value) {
+      return false
+    }
+
     const expressionList = props.value?.split(' ')
     if (expressionList?.length !== 7) {
       messageApi.open({
@@ -315,22 +320,22 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
 
   const tabItems = [
     {
-      label: text.Seconds.name,
+      label: t('Seconds.name'),
       key: '1',
       children: <Seconds value={second} onChange={onChangeSecond} />
     },
     {
-      label: text.Minutes.name,
+      label: t('Minutes.name'),
       key: '2',
       children: <Minutes value={minute} onChange={onChangeMinute} />
     },
     {
-      label: text.Hours.name,
+      label: t('Hours.name'),
       key: '3',
       children: <Hours value={hour} onChange={onChangeHour} />
     },
     {
-      label: text.Day.name,
+      label: t('Day.name'),
       key: '4',
       children: (
         <Day value={day} onChange={onChangeDay}>
@@ -339,16 +344,21 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
       )
     },
     {
-      label: text.Month.name,
+      label: t('Month.name'),
       key: '5',
       children: <Month value={month} onChange={onChangeMonth} />
     },
     {
-      label: text.Year.name,
+      label: t('Year.name'),
       key: '6',
       children: <Year value={year} onChange={onChangeYear} />
     }
   ]
+
+  const onChangeLang = () => {
+    const newLang = i18n.language === 'en' ? 'zhCN' : 'en'
+    i18n.changeLanguage(newLang)
+  }
 
   return (
     <div className={styles.cronContainer}>
@@ -359,6 +369,9 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
       </Card>
       <div className={styles.control}>
         <Space align="center">
+          <Button type="primary" onClick={onChangeLang}>
+            {i18n.language}
+          </Button>
           <Button
             type="primary"
             onClick={() => {
@@ -367,10 +380,10 @@ const ReactCron: React.FC<ReactCronProps> = (props) => {
               }
             }}
           >
-            {text.Save}
+            {t('Save')}
           </Button>
           <Button type="primary" onClick={props.onCancel}>
-            {text.Cancel}
+            {t('Cancel')}
           </Button>
         </Space>
       </div>

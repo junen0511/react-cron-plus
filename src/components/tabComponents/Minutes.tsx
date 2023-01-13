@@ -1,9 +1,8 @@
 import React from 'react'
 import { Radio, Space, Select, InputNumber, Row, Col } from 'antd'
 import type { RadioChangeEvent } from 'antd'
-import Language from '../../language'
 import styles from '../ReactCron.less'
-const text = Language.cn
+import { useTranslation } from 'react-i18next'
 
 export type MinutesProps = {
   value: any
@@ -11,6 +10,7 @@ export type MinutesProps = {
 }
 
 const Minutes: React.FC<MinutesProps> = (props) => {
+  const { t } = useTranslation()
   const MinutesOptions = new Array(60).fill(0).map((value, index) => ({
     value: index
   }))
@@ -37,14 +37,14 @@ const Minutes: React.FC<MinutesProps> = (props) => {
     <div className={styles.tabContent}>
       <Radio.Group onChange={onChangeType} value={props.value.cronEvery}>
         <Space direction="vertical">
-          <Radio value={1}>{text.Minutes.every}</Radio>
+          <Radio value={1}>{t('Minutes.every')}</Radio>
           <Row align="middle">
             <Col>
               <Radio value={2}></Radio>
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Minutes.interval[0]}
+                {t('Minutes.interval.0')}
               </span>
               <InputNumber
                 value={props.value.incrementIncrement}
@@ -53,7 +53,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementIncrement')}
               />
               <span className={styles.optionLabel}>
-                {text.Minutes.interval[1] || ''}
+                {t('Minutes.interval.1')}
               </span>
               <InputNumber
                 value={props.value.incrementStart}
@@ -62,7 +62,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementStart')}
               />
               <span className={styles.optionLabel}>
-                {text.Minutes.interval[2] || ''}
+                {t('Minutes.interval.2')}
               </span>
             </Col>
           </Row>
@@ -72,7 +72,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Minutes.specific}
+                {t('Minutes.specific')}
               </span>
               <Select
                 mode="multiple"
@@ -90,7 +90,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Minutes.cycle[0]}
+                {t('Minutes.cycle.0')}
               </span>
               <InputNumber
                 value={props.value.rangeStart}
@@ -99,7 +99,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'rangeStart')}
               />
               <span className={styles.optionLabel}>
-                {text.Minutes.cycle[1] || ''}
+                {t('Minutes.cycle.1')}
               </span>
               <InputNumber
                 value={props.value.rangeEnd}
@@ -108,7 +108,7 @@ const Minutes: React.FC<MinutesProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'rangeEnd')}
               />
               <span className={styles.optionLabel}>
-                {text.Minutes.cycle[2] || ''}
+                {t('Minutes.cycle.2')}
               </span>
             </Col>
           </Row>

@@ -2,9 +2,8 @@ import React from 'react'
 import { Radio, Space, Select, InputNumber, Row, Col } from 'antd'
 import type { RadioChangeEvent } from 'antd'
 import { WeekProps, weekOptions } from './Week'
-import Language from '../../language'
 import styles from '../ReactCron.less'
-const text = Language.cn
+import { useTranslation } from 'react-i18next'
 
 export type DayProps = {
   value: any
@@ -13,6 +12,8 @@ export type DayProps = {
 }
 
 const Day: React.FC<DayProps> = (props) => {
+  const { t } = useTranslation()
+
   const dayOptions = new Array(31).fill(0).map((value, index) => ({
     value: index + 1
   }))
@@ -39,14 +40,14 @@ const Day: React.FC<DayProps> = (props) => {
     <div className={styles.tabContent}>
       <Radio.Group onChange={onChangeType} value={props.value.cronEvery}>
         <Space direction="vertical">
-          <Radio value={1}>{text.Day.every}</Radio>
+          <Radio value={1}>{t('Day.every')}</Radio>
           <Row align="middle">
             <Col>
               <Radio value={2}></Radio>
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Day.intervalDay[0]}
+                {t('Day.intervalDay.0')}
               </span>
               <InputNumber
                 value={props.value.incrementIncrement}
@@ -55,7 +56,7 @@ const Day: React.FC<DayProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementIncrement')}
               />
               <span className={styles.optionLabel}>
-                {text.Day.intervalDay[1]}
+                {t('Day.intervalDay.1')}
               </span>
               <InputNumber
                 value={props.value.incrementStart}
@@ -64,7 +65,7 @@ const Day: React.FC<DayProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementStart')}
               />
               <span className={styles.optionLabel}>
-                {text.Day.intervalDay[2]}
+                {t('Day.intervalDay.2')}
               </span>
             </Col>
           </Row>
@@ -73,7 +74,7 @@ const Day: React.FC<DayProps> = (props) => {
               <Radio value={3}></Radio>
             </Col>
             <Col>
-              <span className={styles.optionLabel}>{text.Day.specificDay}</span>
+              <span className={styles.optionLabel}>{t('Day.specificDay')}</span>
               <Select
                 mode="multiple"
                 allowClear
@@ -84,15 +85,15 @@ const Day: React.FC<DayProps> = (props) => {
               />
             </Col>
           </Row>
-          <Radio value={4}>{text.Day.lastDay}</Radio>
-          <Radio value={5}>{text.Day.lastWorkDay}</Radio>
+          <Radio value={4}>{t('Day.lastDay')}</Radio>
+          <Radio value={5}>{t('Day.lastWorkDay')}</Radio>
           <Row align="middle">
             <Col>
               <Radio value={6}></Radio>
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Day.beforeEndMonth[0]}
+                {t('Day.beforeEndMonth.0')}
               </span>
               <InputNumber
                 value={props.value.cronDaysBeforeEomMinus}
@@ -103,7 +104,7 @@ const Day: React.FC<DayProps> = (props) => {
                 }
               />
               <span className={styles.optionLabel}>
-                {text.Day.beforeEndMonth[1]}
+                {t('Day.beforeEndMonth.1')}
               </span>
             </Col>
           </Row>
@@ -113,7 +114,7 @@ const Day: React.FC<DayProps> = (props) => {
             </Col>
             <Col>
               <span className={styles.optionLabel}>
-                {text.Day.nearestWeekday[0]}
+                {t('Day.nearestWeekday.0')}
               </span>
               <InputNumber
                 value={props.value.cronDaysNearestWeekday}
@@ -124,7 +125,7 @@ const Day: React.FC<DayProps> = (props) => {
                 }
               />
               <span className={styles.optionLabel}>
-                {text.Day.nearestWeekday[1]}
+                {t('Day.nearestWeekday.1')}
               </span>
             </Col>
           </Row>
@@ -133,7 +134,7 @@ const Day: React.FC<DayProps> = (props) => {
               <Radio value={8}></Radio>
             </Col>
             <Col>
-              <span className={styles.optionLabel}>{text.Day.lastWeek[0]}</span>
+              <span className={styles.optionLabel}>{t('Day.lastWeek.0')}</span>
               <Select
                 allowClear
                 style={{ width: 280 }}
@@ -143,7 +144,7 @@ const Day: React.FC<DayProps> = (props) => {
                   onChangeInput(value, 'cronLastSpecificDomDay')
                 }
               />
-              <span className={styles.optionLabel}>{text.Day.lastWeek[1]}</span>
+              <span className={styles.optionLabel}>{t('Day.lastWeek.1')}</span>
             </Col>
           </Row>
         </Space>
