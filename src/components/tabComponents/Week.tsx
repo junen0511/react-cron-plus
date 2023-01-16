@@ -57,7 +57,7 @@ const Week: React.FC<WeekProps> = (props) => {
           <span className={styles.optionLabel}>{t('Day.intervalWeek.1')}</span>
           <Select
             allowClear
-            style={{ width: 280 }}
+            style={{ width: 180 }}
             value={props.value.incrementStart}
             options={weekOptions}
             onChange={(value) => onChangeInput(value, 'incrementStart')}
@@ -74,7 +74,7 @@ const Week: React.FC<WeekProps> = (props) => {
           <Select
             mode="multiple"
             allowClear
-            style={{ width: 280 }}
+            style={{ width: 240 }}
             value={props.value.specificSpecific}
             options={weekStrOptions}
             onChange={onSelectWeekDay}
@@ -97,7 +97,7 @@ const Week: React.FC<WeekProps> = (props) => {
 
           <Select
             allowClear
-            style={{ width: 280 }}
+            style={{ width: 150 }}
             value={props.value.cronNthDayDay}
             options={weekOptions}
             onChange={(value) => onChangeInput(value, 'cronNthDayDay')}

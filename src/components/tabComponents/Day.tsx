@@ -78,7 +78,7 @@ const Day: React.FC<DayProps> = (props) => {
               <Select
                 mode="multiple"
                 allowClear
-                style={{ width: 280 }}
+                style={{ width: 240 }}
                 value={props.value.specificSpecific}
                 options={dayOptions}
                 onChange={onChangeDay}
@@ -137,7 +137,7 @@ const Day: React.FC<DayProps> = (props) => {
               <span className={styles.optionLabel}>{t('Day.lastWeek.0')}</span>
               <Select
                 allowClear
-                style={{ width: 280 }}
+                style={{ width: 150 }}
                 value={props.value.cronLastSpecificDomDay}
                 options={weekOptions}
                 onChange={(value) =>

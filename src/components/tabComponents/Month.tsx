@@ -75,7 +75,7 @@ const Month: React.FC<MonthProps> = (props) => {
               <Select
                 mode="multiple"
                 allowClear
-                style={{ width: 280 }}
+                style={{ width: 260 }}
                 value={props.value.specificSpecific}
                 options={monthOptions}
                 onChange={onChangeSecond}

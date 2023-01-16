@@ -62,7 +62,7 @@ const Seconds: React.FC<SecondsProps> = (props) => {
                 onChange={(value) => onChangeInput(value, 'incrementStart')}
               />
               <span className={styles.optionLabel}>
-                {t('Seconds.interval.2')}
+                {t('Seconds.interval.2') || ''}
               </span>
             </Col>
           </Row>
