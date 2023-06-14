@@ -1,7 +1,14 @@
 {
-  "name": "react-cron",
-  "version": "0.1.0",
-  "private": true,
+  "name": "react-cron-plus",
+  "author": "tanfei, liujun",
+  "version": "0.1.2",
+  "license": "MIT",
+  "keywords": [
+    "cron",
+    "react",
+    "antd"
+  ],
+  "main": "src/index.tsx",
   "dependencies": {
     "antd": "^5.1.2",
     "i18next": "^22.4.9",
@@ -12,7 +19,7 @@
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "cd test && craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
