@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
-import { Input, Popover } from 'antd'
-import CronPlus from '../index'
+import { Input, Popover, Space } from 'antd'
+import ReactCron from './components/ReactCron'
 import './App.css'
 
 function App() {
@@ -22,7 +22,7 @@ function App() {
         trigger="click"
         open={open}
         content={
-          <CronPlus
+          <ReactCron
             onOka={onOkaCron}
             value={cron}
             onCancel={() => handleOpenChange(false)}

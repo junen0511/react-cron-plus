@@ -1,6 +1,6 @@
 import React from 'react'
 import { Radio, Select, InputNumber, Row, Col, Space } from 'antd'
-import styles from '../styles/index.less'
+import styles from '../ReactCron.less'
 import { useTranslation } from 'react-i18next'
 import i18n from '../language/i18n'
 

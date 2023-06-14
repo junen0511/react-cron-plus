@@ -2,7 +2,7 @@ import React from 'react'
 import { Radio, Space, Select, InputNumber, Row, Col } from 'antd'
 import type { RadioChangeEvent } from 'antd'
 import { WeekProps, weekOptions } from './Week'
-import styles from '../styles/index.less'
+import styles from '../ReactCron.less'
 import { useTranslation } from 'react-i18next'
 
 export type DayProps = {
