@@ -1,58 +1,80 @@
 {
   "name": "react-cron-plus",
-  "author": "tanfei, liujun",
-  "version": "0.1.2",
+  "version": "0.1.4",
+  "description": "react antd corn表达式",
   "license": "MIT",
-  "keywords": [
-    "cron",
-    "react",
-    "antd"
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
   ],
-  "main": "src/index.tsx",
-  "dependencies": {
-    "antd": "^5.1.2",
-    "i18next": "^22.4.9",
-    "moment": "^2.29.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-i18next": "^12.1.4",
-    "web-vitals": "^2.1.0"
-  },
   "scripts": {
-    "start": "cd test && craco start",
-    "build": "craco build",
-    "test": "craco test",
-    "eject": "react-scripts eject"
+    "build": "father build",
+    "build:watch": "father dev",
+    "dev": "dumi dev",
+    "docs:build": "dumi build",
+    "doctor": "father doctor",
+    "lint": "npm run lint:es && npm run lint:css",
+    "lint:css": "stylelint \"{src,test}/**/*.{css,less}\"",
+    "lint:es": "eslint \"{src,test}/**/*.{js,jsx,ts,tsx}\"",
+    "prepare": "husky install && dumi setup",
+    "prepublishOnly": "father doctor && npm run build",
+    "start": "npm run dev"
   },
-  "eslintConfig": {
+  "commitlint": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "@commitlint/config-conventional"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
+  "lint-staged": {
+    "*.{md,json}": [
+      "prettier --write --no-error-on-unmatched-pattern"
     ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
+    "*.{css,less}": [
+      "stylelint --fix",
+      "prettier --write"
+    ],
+    "*.{js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --parser=typescript --write"
     ]
+  },
+  "dependencies": {
+    "antd": "^5.6.1",
+    "i18next": "^22.5.1",
+    "moment": "^2.29.4",
+    "react-i18next": "^12.3.1"
   },
   "devDependencies": {
-    "@craco/craco": "^7.0.0",
-    "@testing-library/jest-dom": "^5.14.1",
-    "@testing-library/react": "^13.0.0",
-    "@testing-library/user-event": "^13.2.1",
-    "@types/jest": "^27.0.1",
-    "@types/node": "^16.7.13",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "craco-antd": "^2.0.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.4.2"
-  }
+    "@umijs/lint": "^4.0.0",
+    "dumi": "^2.2.0",
+    "eslint": "^8.23.0",
+    "father": "^4.1.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "prettier-plugin-organize-imports": "^3.0.0",
+    "prettier-plugin-packagejson": "^2.2.18",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "stylelint": "^14.9.1"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0",
+    "react-dom": ">=16.9.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "authors": [
+    "attanhao@gmail.com"
+  ]
 }

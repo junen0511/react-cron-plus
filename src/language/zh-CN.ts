@@ -5,21 +5,21 @@ export default {
       every: '每一秒钟',
       interval: ['每隔', '秒执行 从', '秒开始'],
       specific: '具体秒数(可多选)',
-      cycle: ['周期从', '到', '秒']
+      cycle: ['周期从', '到', '秒'],
     },
     Minutes: {
       name: '分',
       every: '每一分钟',
       interval: ['每隔', '分执行 从', '分开始'],
       specific: '具体分钟数(可多选)',
-      cycle: ['周期从', '到', '分']
+      cycle: ['周期从', '到', '分'],
     },
     Hours: {
       name: '时',
       every: '每一小时',
       interval: ['每隔', '小时执行 从', '小时开始'],
       specific: '具体小时数(可多选)',
-      cycle: ['周期从', '到', '小时']
+      cycle: ['周期从', '到', '小时'],
     },
     Day: {
       name: '天',
@@ -33,7 +33,7 @@ export default {
       nearestWeekday: ['最近的工作日（周一至周五）至本月', '日'],
       someWeekday: ['在这个月的第', '个'],
       intervalWeek: ['每隔', '周执行 从', '开始'],
-      specificWeek: '具体星期几(可多选)'
+      specificWeek: '具体星期几(可多选)',
     },
     Week: [
       '星期天',
@@ -42,23 +42,23 @@ export default {
       '星期三',
       '星期四',
       '星期五',
-      '星期六'
+      '星期六',
     ],
     Month: {
       name: '月',
       every: '每一月',
       interval: ['每隔', '月执行 从', '月开始'],
       specific: '具体月数(可多选)',
-      cycle: ['从', '到', '月之间的每个月']
+      cycle: ['从', '到', '月之间的每个月'],
     },
     Year: {
       name: '年',
       every: '每一年',
       interval: ['每隔', '年执行 从', '年开始'],
       specific: '具体年份(可多选)',
-      cycle: ['从', '到', '年之间的每一年']
+      cycle: ['从', '到', '年之间的每一年'],
     },
-    Save: '保存',
-    Cancel: '取消'
-  }
-}
+    Save: '确定',
+    Cancel: '取消',
+  },
+};

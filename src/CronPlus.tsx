@@ -1,306 +1,306 @@
-import React, { useState, useEffect, useMemo } from 'react'
-import { Button, Tabs, Space, Card, message } from 'antd'
-import defaultData from './utils/defaultData'
-import styles from './styles/index.less'
-import Seconds from './components/Seconds'
-import Minutes from './components/Minutes'
-import Hours from './components/Hours'
-import Day from './components/Day'
-import Week from './components/Week'
-import Month from './components/Month'
-import Year from './components/Year'
-import { cronExpressionParser, dayExpressionParser } from './utils'
-import './language/i18n'
-import { useTranslation } from 'react-i18next'
+import { Button, Card, message, Space, Tabs } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import Day from './components/Day';
+import Hours from './components/Hours';
+import Minutes from './components/Minutes';
+import Month from './components/Month';
+import Seconds from './components/Seconds';
+import Week from './components/Week';
+import Year from './components/Year';
+import './language/i18n';
+import './styles/index.less';
+import { cronExpressionParser, dayExpressionParser } from './utils';
+import defaultData from './utils/defaultData';
 
 export type CronPlusProps = {
-  value?: string
-  onOka?: (value?: string) => void
-  onCancel?: () => void
-}
+  value?: string;
+  onOka?: (value?: string) => void;
+  onCancel?: () => void;
+};
 
 const CronPlus: React.FC<CronPlusProps> = (props) => {
-  const { t, i18n } = useTranslation()
-  const [messageApi, contextHolder] = message.useMessage()
-  const [second, setSecond] = useState(defaultData.second)
-  const [minute, setMinute] = useState(defaultData.minute)
-  const [hour, setHour] = useState(defaultData.hour)
-  const [day, setDay] = useState(defaultData.day)
-  const [week, setWeek] = useState(defaultData.week)
-  const [month, setMonth] = useState(defaultData.month)
-  const [year, setYear] = useState(defaultData.year)
+  const { t, i18n } = useTranslation();
+  const [messageApi] = message.useMessage();
+  const [second, setSecond] = useState(defaultData.second);
+  const [minute, setMinute] = useState(defaultData.minute);
+  const [hour, setHour] = useState(defaultData.hour);
+  const [day, setDay] = useState(defaultData.day);
+  const [week, setWeek] = useState(defaultData.week);
+  const [month, setMonth] = useState(defaultData.month);
+  const [year, setYear] = useState(defaultData.year);
   //   const [output, setOutput] = useState(defaultData.output)
-
-  useEffect(() => {
-    initialExpressionParser()
-  }, [props.value])
 
   // Week parser
   const weekExpressionParser = (expressionValue: any, expression: string) => {
     if (expression.indexOf('/') >= 0) {
-      setDay({ ...day, cronEvery: 9 })
+      setDay({ ...day, cronEvery: 9 });
     } else if (expression.indexOf(',') >= 0) {
-      setDay({ ...day, cronEvery: 10 })
+      setDay({ ...day, cronEvery: 10 });
     } else if (expression.indexOf('#') >= 0) {
-      setDay({ ...day, cronEvery: 11 })
+      setDay({ ...day, cronEvery: 11 });
     }
-    setWeek(cronExpressionParser(expressionValue, expression))
-  }
+    setWeek(cronExpressionParser(expressionValue, expression));
+  };
 
   const initialExpressionParser = () => {
     if (!props.value) {
-      return false
+      return false;
     }
 
-    const expressionList = props.value?.split(' ')
+    const expressionList = props.value?.split(' ');
     if (expressionList?.length !== 7) {
       messageApi.open({
         type: 'error',
-        content: 'Cron 表达式格式错误!'
-      })
-      return false
+        content: 'Cron 表达式格式错误!',
+      });
+      return false;
     }
 
     if (expressionList && expressionList?.length > 0) {
       expressionList.forEach((expression: string, index: number) => {
         switch (index) {
           case 0:
-            setSecond(cronExpressionParser(second, expression))
-            break
+            setSecond(cronExpressionParser(second, expression));
+            break;
           case 1:
-            setMinute(cronExpressionParser(minute, expression))
-            break
+            setMinute(cronExpressionParser(minute, expression));
+            break;
           case 2:
-            setHour(cronExpressionParser(hour, expression))
-            break
+            setHour(cronExpressionParser(hour, expression));
+            break;
           case 3:
             if (expression !== '?') {
-              setDay(dayExpressionParser(day, expression))
+              setDay(dayExpressionParser(day, expression));
             }
-            break
+            break;
           case 4:
-            setMonth(cronExpressionParser(month, expression))
-            break
+            setMonth(cronExpressionParser(month, expression));
+            break;
           case 5:
             if (expression !== '?') {
-              weekExpressionParser(week, expression)
+              weekExpressionParser(week, expression);
             }
-            break
+            break;
           case 6:
-            setYear(cronExpressionParser(year, expression))
-            break
+            setYear(cronExpressionParser(year, expression));
+            break;
         }
-      })
+      });
     }
-  }
+  };
+
+  useEffect(() => {
+    initialExpressionParser();
+  }, [props.value]);
 
   // second/秒
   const onChangeSecond = (value: number[] | number, filedKey: string) => {
-    setSecond({ ...second, [filedKey]: value })
-  }
+    setSecond({ ...second, [filedKey]: value });
+  };
 
   const secondsText = useMemo(() => {
-    let seconds = ''
-    let cronEvery = second.cronEvery
+    let seconds = '';
+    let cronEvery = second.cronEvery;
     switch (cronEvery) {
       case 1:
-        seconds = '*'
-        break
+        seconds = '*';
+        break;
       case 2:
-        seconds = second.incrementStart + '/' + second.incrementIncrement
-        break
+        seconds = second.incrementStart + '/' + second.incrementIncrement;
+        break;
       case 3:
         if (Array.isArray(second.specificSpecific)) {
-          seconds = second.specificSpecific.join(',')
+          seconds = second.specificSpecific.join(',');
         }
-        break
+        break;
       case 4:
-        seconds = second.rangeStart + '-' + second.rangeEnd
-        break
+        seconds = second.rangeStart + '-' + second.rangeEnd;
+        break;
     }
-    return seconds
-  }, [second])
+    return seconds;
+  }, [second]);
 
   // minute/分
   const onChangeMinute = (value: number[] | number, filedKey: string) => {
-    setMinute({ ...minute, [filedKey]: value })
-  }
+    setMinute({ ...minute, [filedKey]: value });
+  };
 
   const minutesText = useMemo(() => {
-    let minutes = ''
-    let cronEvery = minute.cronEvery
+    let minutes = '';
+    let cronEvery = minute.cronEvery;
     switch (cronEvery) {
       case 1:
-        minutes = '*'
-        break
+        minutes = '*';
+        break;
       case 2:
-        minutes = minute.incrementStart + '/' + minute.incrementIncrement
-        break
+        minutes = minute.incrementStart + '/' + minute.incrementIncrement;
+        break;
       case 3:
         if (Array.isArray(minute.specificSpecific)) {
-          minutes = minute.specificSpecific.join(',')
+          minutes = minute.specificSpecific.join(',');
         }
-        break
+        break;
       case 4:
-        minutes = minute.rangeStart + '-' + minute.rangeEnd
-        break
+        minutes = minute.rangeStart + '-' + minute.rangeEnd;
+        break;
     }
-    return minutes
-  }, [minute])
+    return minutes;
+  }, [minute]);
 
   // hour/时
   const onChangeHour = (value: number[] | number, filedKey: string) => {
-    setHour({ ...hour, [filedKey]: value })
-  }
+    setHour({ ...hour, [filedKey]: value });
+  };
 
   const hoursText = useMemo(() => {
-    let hours = ''
-    let cronEvery = hour.cronEvery
+    let hours = '';
+    let cronEvery = hour.cronEvery;
     switch (cronEvery) {
       case 1:
-        hours = '*'
-        break
+        hours = '*';
+        break;
       case 2:
-        hours = hour.incrementStart + '/' + hour.incrementIncrement
-        break
+        hours = hour.incrementStart + '/' + hour.incrementIncrement;
+        break;
       case 3:
         if (Array.isArray(hour.specificSpecific)) {
-          hours = hour.specificSpecific.join(',')
+          hours = hour.specificSpecific.join(',');
         }
-        break
+        break;
       case 4:
-        hours = hour.rangeStart + '-' + hour.rangeEnd
-        break
+        hours = hour.rangeStart + '-' + hour.rangeEnd;
+        break;
     }
-    return hours
-  }, [hour])
+    return hours;
+  }, [hour]);
 
   // day/天
   const onChangeDay = (value: number[] | number, filedKey: string) => {
-    setDay({ ...day, [filedKey]: value })
-  }
+    setDay({ ...day, [filedKey]: value });
+  };
 
   const daysText = useMemo(() => {
-    let days = ''
-    let cronEvery = day.cronEvery
+    let days = '';
+    let cronEvery = day.cronEvery;
     switch (cronEvery) {
       case 1:
-        days = '*'
-        break
+        days = '*';
+        break;
       case 2:
-        days = day.incrementStart + '/' + day.incrementIncrement
-        break
+        days = day.incrementStart + '/' + day.incrementIncrement;
+        break;
       case 3:
         if (Array.isArray(day.specificSpecific)) {
-          days = day.specificSpecific.join(',')
+          days = day.specificSpecific.join(',');
         }
-        break
+        break;
       case 4:
-        days = 'L'
-        break
+        days = 'L';
+        break;
       case 5:
-        days = 'LW'
-        break
+        days = 'LW';
+        break;
       case 6:
-        days = 'L-' + day.cronDaysBeforeEomMinus
-        break
+        days = 'L-' + day.cronDaysBeforeEomMinus;
+        break;
       case 7:
-        days = day.cronDaysNearestWeekday + 'W'
-        break
+        days = day.cronDaysNearestWeekday + 'W';
+        break;
       case 8:
-        days = day.cronLastSpecificDomDay + 'L'
-        break
+        days = day.cronLastSpecificDomDay + 'L';
+        break;
       default:
-        days = '?'
-        break
+        days = '?';
+        break;
     }
-    return days
-  }, [day])
+    return days;
+  }, [day]);
 
   // week/周
   const onChangeWeek = (value: number[] | number, filedKey: string) => {
-    setWeek({ ...week, [filedKey]: value })
-  }
+    setWeek({ ...week, [filedKey]: value });
+  };
 
   const onSelectWeek = (value: string[] | string) => {
-    setWeek({ ...week, specificSpecific: value })
-  }
+    setWeek({ ...week, specificSpecific: value });
+  };
 
   const weeksText = useMemo(() => {
-    let weeks = ''
-    let cronEvery = day.cronEvery
+    let weeks = '';
+    let cronEvery = day.cronEvery;
     switch (cronEvery) {
       case 9:
-        weeks = week.incrementStart + '/' + week.incrementIncrement
-        break
+        weeks = week.incrementStart + '/' + week.incrementIncrement;
+        break;
       case 10:
         if (Array.isArray(week.specificSpecific)) {
-          weeks = week.specificSpecific.join(',')
+          weeks = week.specificSpecific.join(',');
         }
-        break
+        break;
       case 11:
-        weeks = week.cronNthDayDay + '#' + week.cronNthDayNth
-        break
+        weeks = week.cronNthDayDay + '#' + week.cronNthDayNth;
+        break;
       default:
-        weeks = '?'
-        break
+        weeks = '?';
+        break;
     }
-    return weeks
-  }, [week, day.cronEvery])
+    return weeks;
+  }, [week, day.cronEvery]);
 
   // month/月
   const onChangeMonth = (value: number[] | number, filedKey: string) => {
-    setMonth({ ...month, [filedKey]: value })
-  }
+    setMonth({ ...month, [filedKey]: value });
+  };
 
   const monthsText = useMemo(() => {
-    let months = ''
-    let cronEvery = month.cronEvery
+    let months = '';
+    let cronEvery = month.cronEvery;
     switch (cronEvery) {
       case 1:
-        months = '*'
-        break
+        months = '*';
+        break;
       case 2:
-        months = month.incrementStart + '/' + month.incrementIncrement
-        break
+        months = month.incrementStart + '/' + month.incrementIncrement;
+        break;
       case 3:
         if (Array.isArray(month.specificSpecific)) {
-          months = month.specificSpecific.join(',')
+          months = month.specificSpecific.join(',');
         }
-        break
+        break;
       case 4:
-        months = month.rangeStart + '-' + month.rangeEnd
-        break
+        months = month.rangeStart + '-' + month.rangeEnd;
+        break;
     }
-    return months
-  }, [month])
+    return months;
+  }, [month]);
 
   // year/月
   const onChangeYear = (value: number[] | number, filedKey: string) => {
-    setYear({ ...year, [filedKey]: value })
-  }
+    setYear({ ...year, [filedKey]: value });
+  };
 
   const yearsText = useMemo(() => {
-    let years = ''
-    let cronEvery = year.cronEvery
+    let years = '';
+    let cronEvery = year.cronEvery;
     switch (cronEvery) {
       case 1:
-        years = '*'
-        break
+        years = '*';
+        break;
       case 2:
-        years = year.incrementStart + '/' + year.incrementIncrement
-        break
+        years = year.incrementStart + '/' + year.incrementIncrement;
+        break;
       case 3:
         if (Array.isArray(year.specificSpecific)) {
-          years = year.specificSpecific.join(',')
+          years = year.specificSpecific.join(',');
         }
-        break
+        break;
       case 4:
-        years = year.rangeStart + '-' + year.rangeEnd
-        break
+        years = year.rangeStart + '-' + year.rangeEnd;
+        break;
     }
-    return years
-  }, [year])
+    return years;
+  }, [year]);
 
   const cron = useMemo(
     () =>
@@ -314,25 +314,25 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
       daysText,
       monthsText,
       weeksText,
-      yearsText
-    ]
-  )
+      yearsText,
+    ],
+  );
 
   const tabItems = [
     {
       label: t('Seconds.name'),
       key: '1',
-      children: <Seconds value={second} onChange={onChangeSecond} />
+      children: <Seconds value={second} onChange={onChangeSecond} />,
     },
     {
       label: t('Minutes.name'),
       key: '2',
-      children: <Minutes value={minute} onChange={onChangeMinute} />
+      children: <Minutes value={minute} onChange={onChangeMinute} />,
     },
     {
       label: t('Hours.name'),
       key: '3',
-      children: <Hours value={hour} onChange={onChangeHour} />
+      children: <Hours value={hour} onChange={onChangeHour} />,
     },
     {
       label: t('Day.name'),
@@ -341,33 +341,32 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
         <Day value={day} onChange={onChangeDay}>
           <Week value={week} onChange={onChangeWeek} onSelect={onSelectWeek} />
         </Day>
-      )
+      ),
     },
     {
       label: t('Month.name'),
       key: '5',
-      children: <Month value={month} onChange={onChangeMonth} />
+      children: <Month value={month} onChange={onChangeMonth} />,
     },
     {
       label: t('Year.name'),
       key: '6',
-      children: <Year value={year} onChange={onChangeYear} />
-    }
-  ]
+      children: <Year value={year} onChange={onChangeYear} />,
+    },
+  ];
 
   const onChangeLang = () => {
-    const newLang = i18n.language === 'en' ? 'zhCN' : 'en'
-    i18n.changeLanguage(newLang)
-  }
+    const newLang = i18n.language === 'en' ? 'zhCN' : 'en';
+    i18n.changeLanguage(newLang);
+  };
 
   return (
-    <div className={styles.cronContainer}>
-      {contextHolder}
-      <p className={styles.result}>{cron}</p>
+    <div className="cronContainer">
+      <p className="result">{cron}</p>
       <Card size="small">
         <Tabs defaultActiveKey="1" items={tabItems} />
       </Card>
-      <div className={styles.control}>
+      <div className="control">
         <Space align="center">
           <Button type="primary" onClick={onChangeLang}>
             {i18n.language}
@@ -376,7 +375,7 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
             type="primary"
             onClick={() => {
               if (props.onOka) {
-                props.onOka(cron)
+                props.onOka(cron);
               }
             }}
           >
@@ -388,7 +387,7 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
         </Space>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CronPlus
+export default CronPlus;
