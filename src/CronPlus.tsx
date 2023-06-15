@@ -355,10 +355,10 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
     },
   ];
 
-  const onChangeLang = () => {
-    const newLang = i18n.language === 'en' ? 'zhCN' : 'en';
-    i18n.changeLanguage(newLang);
-  };
+  // const onChangeLang = () => {
+  //   const newLang = i18n.language === 'en' ? 'zhCN' : 'en';
+  //   i18n.changeLanguage(newLang);
+  // };
 
   return (
     <div className="cronContainer">
@@ -368,9 +368,9 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
       </Card>
       <div className="control">
         <Space align="center">
-          <Button type="primary" onClick={onChangeLang}>
+          {/* <Button type="primary" onClick={onChangeLang}>
             {i18n.language}
-          </Button>
+          </Button> */}
           <Button
             type="primary"
             onClick={() => {
