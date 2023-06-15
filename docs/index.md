@@ -19,3 +19,5 @@ features:
     description: 支持国际化(中/英)
   
 ---
+
+<embed src="../README.md"></embed>
