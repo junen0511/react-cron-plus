@@ -35,7 +35,7 @@ export default () => (
 | Prop        | Description                 | Type                  | Accepted Values | Default   |
 | ----------- | --------------------------- | --------------------- | --------------- | --------- |
 | value       | 外部传入的cron解析式           | string                |                 |           |
-| language    | 国际化                       | string                | zhCN / en       | en        |
+| language    | 国际化                       | string                | zhCN / en       | zhCN        |
 | result      | cron 结果样式                | string \| boolean    | normal / simple/ false | false|
 | onOk        | 确定方法           |                 |                 |           |
 | onCancel    | 取消方法           |                 |                 |           |
