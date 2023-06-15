@@ -4,7 +4,7 @@
 [![NPM downloads](http://img.shields.io/npm/dm/react-cron-plus.svg?style=flat)](https://npmjs.org/package/react-cron-plus)
 [![dumi](https://img.shields.io/badge/docs%20by-dumi-blue?style=flat-square)](https://github.com/umijs/dumi)
 
-react antd corn表达式 
+react antd corn表达式
 
 ## Development
 
