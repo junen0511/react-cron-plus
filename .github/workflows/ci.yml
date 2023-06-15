@@ -10,18 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@main
       - run: yarn
       - run: yarn run lint
       # - run: yarn run tsc
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@4.0.0
+        uses: JamesIves/github-pages-deploy-action@4.3.3
         env:
           CI: true
           GIT_CONFIG_NAME: tanfei21
           GIT_CONFIG_EMAIL: tanfei_68@163.com
           NODE_OPTIONS: --max_old_space_size=4096
           GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
-          BRANCH: gh-pages
+          BRANCH: docs
           FOLDER: 'dist/'
-          BUILD_SCRIPT: yarn && npm uninstall husky && npm run docs:build && git checkout . && git clean -df
+          CLEAN: true
+          commit-message: 'Deploy by source'
