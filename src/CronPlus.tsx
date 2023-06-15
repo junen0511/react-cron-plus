@@ -5,6 +5,7 @@ import Day from './components/Day';
 import Hours from './components/Hours';
 import Minutes from './components/Minutes';
 import Month from './components/Month';
+import Result from './components/Result';
 import Seconds from './components/Seconds';
 import Week from './components/Week';
 import Year from './components/Year';
@@ -15,7 +16,9 @@ import defaultData from './utils/defaultData';
 
 export type CronPlusProps = {
   value?: string;
-  onOka?: (value?: string) => void;
+  language?: string;
+  result?: string | boolean;
+  onOk?: (value?: string) => void;
   onCancel?: () => void;
 };
 
@@ -29,7 +32,6 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
   const [week, setWeek] = useState(defaultData.week);
   const [month, setMonth] = useState(defaultData.month);
   const [year, setYear] = useState(defaultData.year);
-  //   const [output, setOutput] = useState(defaultData.output)
 
   // Week parser
   const weekExpressionParser = (expressionValue: any, expression: string) => {
@@ -52,7 +54,7 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
     if (expressionList?.length !== 7) {
       messageApi.open({
         type: 'error',
-        content: 'Cron 表达式格式错误!',
+        content: 'Cron Error!',
       });
       return false;
     }
@@ -355,35 +357,44 @@ const CronPlus: React.FC<CronPlusProps> = (props) => {
     },
   ];
 
-  // const onChangeLang = () => {
-  //   const newLang = i18n.language === 'en' ? 'zhCN' : 'en';
-  //   i18n.changeLanguage(newLang);
-  // };
+  useEffect(() => {
+    i18n.changeLanguage(props.language);
+  }, [props.language]);
 
   return (
     <div className="cronContainer">
-      <p className="result">{cron}</p>
+      <Result
+        theme={props.result}
+        crontabValueObj={{
+          second: secondsText,
+          minute: minutesText,
+          hour: hoursText,
+          day: daysText,
+          month: monthsText,
+          week: weeksText,
+          year: yearsText,
+        }}
+      ></Result>
       <Card size="small">
         <Tabs defaultActiveKey="1" items={tabItems} />
       </Card>
       <div className="control">
-        <Space align="center">
-          {/* <Button type="primary" onClick={onChangeLang}>
-            {i18n.language}
-          </Button> */}
-          <Button
-            type="primary"
-            onClick={() => {
-              if (props.onOka) {
-                props.onOka(cron);
-              }
-            }}
-          >
-            {t('Save')}
-          </Button>
-          <Button type="primary" onClick={props.onCancel}>
-            {t('Cancel')}
-          </Button>
+        <Space>
+          {props.onCancel && (
+            <Button onClick={props.onCancel}>{t('Cancel')}</Button>
+          )}
+          {props.onOk && (
+            <Button
+              type="primary"
+              onClick={() => {
+                if (props.onOk) {
+                  props.onOk(cron);
+                }
+              }}
+            >
+              {t('OK')}
+            </Button>
+          )}
         </Space>
       </div>
     </div>

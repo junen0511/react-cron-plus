@@ -12,7 +12,7 @@ export type WeekProps = {
 
 export const weekOptions = new Array(7).fill(0).map((value, index) => ({
   value: index,
-  label: i18n.t(`Week.${index}`),
+  label: i18n.t(`Week.list.${index}`),
 }));
 
 export const nthOptions = new Array(5).fill(0).map((value, index) => ({
@@ -24,7 +24,7 @@ const Week: React.FC<WeekProps> = (props) => {
   const weekStrOptions = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(
     (value, index) => ({
       value,
-      label: t(`Week.${index}`),
+      label: t(`Week.list.${index}`),
     }),
   );
 
