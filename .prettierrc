@@ -1,8 +1,0 @@
-{
-  "htmlWhitespaceSensitivity": "ignore",
-  "trailingComma": "none",
-  "tabWidth": 2,
-  "semi": false,
-  "singleQuote": true,
-  "semicolons": false
-}
