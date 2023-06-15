@@ -7,22 +7,18 @@ on:
 
 jobs:
   build-and-deploy:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@main
-      - run: yarn
-      - run: yarn run lint
-      # - run: yarn run tsc
-      - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@v4.3.3
-        env:
-          CI: true
-          GIT_CONFIG_NAME: tanfei21
-          GIT_CONFIG_EMAIL: tanfei_68@163.com
-          NODE_OPTIONS: --max_old_space_size=4096
-          GITHUB_TOKEN: ${{ secrets.ACTION_TOKEN }}
-          BRANCH: docs
-          FOLDER: 'dist/'
-          CLEAN: true
-          commit-message: 'Deploy by source'
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install and Build 🔧 # This example project is built using npm and outputs the result to the 'build' folder. Replace with the commands required to build your project, or remove this step entirely if your site is pre-built.
+        run: |
+          yarn
+          yarn run docs-build
+
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs # The folder the action should deploy.
