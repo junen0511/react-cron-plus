@@ -15,7 +15,7 @@ jobs:
       - run: yarn run lint
       # - run: yarn run tsc
       - name: Build and Deploy
-        uses: JamesIves/github-pages-deploy-action@4.3.3
+        uses: JamesIves/github-pages-deploy-action@v4.3.3
         env:
           CI: true
           GIT_CONFIG_NAME: tanfei21
