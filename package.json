@@ -1,8 +1,19 @@
 {
   "name": "react-cron-plus",
-  "version": "0.1.5",
+  "version": "1.0.0",
   "description": "react antd corn表达式",
+  "homepage": "https://github.com/junen0511/react-cron-plus/",
+  "bugs": {
+    "url": "https://github.com/junen0511/react-cron-plus/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:junen0511/react-cron-plus.git"
+  },
   "license": "MIT",
+  "maintainers": [
+    "attanhao@gmail.com"
+  ],
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -73,8 +84,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "authors": [
-    "attanhao@gmail.com"
-  ]
+  }
 }
