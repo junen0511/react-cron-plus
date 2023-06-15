@@ -2,7 +2,6 @@
   "name": "react-cron-plus",
   "version": "1.0.0",
   "description": "react antd corn表达式",
-  "homepage": "https://github.com/junen0511/react-cron-plus/",
   "bugs": {
     "url": "https://github.com/junen0511/react-cron-plus/issues"
   },
