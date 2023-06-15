@@ -26,8 +26,8 @@ jobs:
       # 打包代码
       - name: Build Project
         run: |
-          npm install
-          npm run docs:build
+          yarn
+          yarn run docs:build
 
       # 部署到github
       - name: Deploy to Github
